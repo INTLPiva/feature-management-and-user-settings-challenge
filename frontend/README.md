@@ -1,50 +1,150 @@
-# Welcome to your Expo app 👋
+# Feature Management & User Settings - Frontend
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Frontend em React Native (Expo) para gerenciamento de preferências do usuário e feature flags.
 
-## Get started
+## 🏗️ Arquitetura
 
-1. Install dependencies
+O projeto utiliza a arquitetura **MVVM (Model-View-ViewModel)**
 
-   ```bash
-   npm install
-   ```
+## 🚀 Tecnologias
 
-2. Start the app
+- React Native + Expo
+- Expo Router
+- TypeScript
+- TanStack Query
+- Zustand
+- AsyncStorage
+- React Native Toast Message
 
-   ```bash
-   npx expo start
-   ```
+## 📋 Pré-requisitos
 
-In the output, you'll find options to open the app in a
+- Node.js (v18+)
+- npm
+- Expo CLI
+- Backend rodando em `http://localhost:3333`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🔧 Instalação
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Clone o repositório
 
 ```bash
-npm run reset-project
+git clone https://github.com/INTLPiva/feature-management-and-user-settings-challenge
+cd frontend
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Instale as dependências
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+3. Configure as variáveis de ambiente
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+cp .env.example .env
+```
 
-## Join the community
+Exemplo de `.env`:
 
-Join our community of developers creating universal apps.
+```env
+EXPO_PUBLIC_API_URL=http://IpDoComputador:3333
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 💻 Executando Localmente
+
+1. Inicie o servidor de desenvolvimento:
+
+```bash
+npx expo start
+```
+
+2. Rode no dispositivo/emulador:
+
+- Pressione `i` para iOS
+- Pressione `a` para Android
+- Escaneie o QR Code com o app Expo Go (mobile)
+
+## 🔌 Integração com API
+
+O app consome os seguintes endpoints:
+
+### Feature Flags
+
+```
+GET /api/feature-flags
+```
+
+Retorna todas as feature flags disponíveis.
+
+### Settings
+
+```
+GET /api/settings
+```
+
+Retorna as configurações atuais do usuário.
+
+```
+PUT /api/settings
+Content-Type: application/json
+
+{
+  "setting": "darkMode",
+  "value": true
+}
+```
+
+Atualiza uma configuração específica.
+
+## 🎯 Funcionalidades
+
+### Tela Inicial
+
+- Mensagem de boas-vindas
+- Botão para acessar configurações
+- Tema responsivo (claro/escuro)
+
+### Tela de Configurações
+
+**Toggles condicionais (baseados em feature flags):**
+
+- **Receber Notificações**: Ativa/desativa notificações (se `enable_notifications` = true)
+- **Modo Dark**: Alterna entre tema claro e escuro (se `enable_dark_mode` = true)
+
+**Campo condicional:**
+
+- **Assinatura do Perfil**: Só aparece se a feature flag `enable_signature` estiver ativa
+
+**Características:**
+
+- Loading state durante carregamento inicial
+- Feedback via toast em sucesso/erro
+- Atualização automática do tema ao mudar "Modo Dark"
+- Debounce automático no campo de texto (atualiza ao perder foco)
+- Persistência do tema via AsyncStorage
+
+## 📁 Estrutura de Pastas
+
+```
+/app
+  ├── _layout.tsx
+  ├── index.tsx
+  └── settings.tsx
+
+/src
+  ├── /constants
+  │   └── theme.ts
+  ├── /services
+  │   └── api.ts
+  ├── /stores
+  │   └── themeStore.ts
+  ├── /types
+  │   └── index.ts
+  ├── /viewmodels
+  │   └── useSettingsViewModel.ts
+  └── /views
+      └── /components
+          ├── Loading.tsx
+          ├── TextInputField.tsx
+          └── Toggle.tsx
+```
