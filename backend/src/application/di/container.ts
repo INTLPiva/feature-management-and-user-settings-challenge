@@ -1,6 +1,6 @@
-import { PostgresSettingsRepository } from "@/infrastructure/repositories/postgres-settings.repository";
-import { PostgresFeatureFlagRepository } from "@/infrastructure/repositories/postgres-feature-flag.repository";
-import { PostgresAuditLogRepository } from "@/infrastructure/repositories/postgres-audit-log.repository";
+import { PostgresSettingsRepository } from "@/infrastructure/repositories/postgres/postgres-settings.repository";
+import { PostgresFeatureFlagRepository } from "@/infrastructure/repositories/postgres/postgres-feature-flag.repository";
+import { PostgresAuditLogRepository } from "@/infrastructure/repositories/postgres/postgres-audit-log.repository";
 
 import { GetSettingsUseCase } from "@/domain/use-cases/get-settings.use-case";
 import { UpdateSettingsUseCase } from "@/domain/use-cases/update-settings.use-case";
@@ -21,18 +21,18 @@ class DIContainer {
     const getSettingsUseCase = new GetSettingsUseCase(settingsRepository);
     const updateSettingsUseCase = new UpdateSettingsUseCase(
       settingsRepository,
-      auditLogRepository
+      auditLogRepository,
     );
     const getFeatureFlagsUseCase = new GetFeatureFlagsUseCase(
-      featureFlagRepository
+      featureFlagRepository,
     );
 
     this.settingsController = new SettingsController(
       getSettingsUseCase,
-      updateSettingsUseCase
+      updateSettingsUseCase,
     );
     this.featureFlagController = new FeatureFlagController(
-      getFeatureFlagsUseCase
+      getFeatureFlagsUseCase,
     );
   }
 }

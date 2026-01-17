@@ -7,7 +7,9 @@
     "dev": "tsx watch src/server.ts",
     "start": "node build/server.js",
     "build": "tsup",
-    "migrate": "tsx src/infrastructure/database/run-migrations.ts"
+    "migrate": "tsx src/infrastructure/database/run-migrations.ts",
+    "test": "vitest run --config vitest.config.unit.ts",
+    "test:e2e": "vitest run --config vitest.config.e2e.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,9 +17,12 @@
   "type": "commonjs",
   "devDependencies": {
     "@types/node": "25.0.9",
+    "@types/supertest": "7.2.0",
+    "supertest": "7.2.2",
     "tsup": "8.5.1",
     "tsx": "4.21.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.1.1"
   },
   "dependencies": {
     "@types/pg": "8.16.0",

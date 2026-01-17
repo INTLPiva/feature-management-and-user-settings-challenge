@@ -37,6 +37,10 @@ class PostgresConnection {
     return await this.pool.query(text, params);
   }
 
+  public async setSearchPath(schema: string): Promise<void> {
+    await this.pool.query(`SET search_path TO "${schema}", public`);
+  }
+
   public async close(): Promise<void> {
     await this.pool.end();
   }

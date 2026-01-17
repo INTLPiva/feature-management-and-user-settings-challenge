@@ -150,6 +150,28 @@ Resposta:
 }
 ```
 
+## 🧪 Testes
+
+O projeto utiliza [Vitest](https://vitest.dev/) como framework de testes, com duas configurações separadas:
+
+### Testes unitários
+
+Testam os casos de uso da camada de domínio utilizando repositórios in-memory, sem dependência de banco de dados.
+
+```bash
+npm test
+```
+
+### Testes E2E
+
+Testam os controllers da camada de aplicação com requisições HTTP reais (via Supertest) contra um banco PostgreSQL isolado (schema aleatório criado por execução).
+
+> **Pré-requisito**: o PostgreSQL precisa estar rodando (`docker-compose up -d`).
+
+```bash
+npm run test:e2e
+```
+
 ## 🗄️ Estrutura do Banco de Dados
 
 ### Tabelas

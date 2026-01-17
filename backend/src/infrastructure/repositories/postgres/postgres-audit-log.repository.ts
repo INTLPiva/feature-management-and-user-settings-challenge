@@ -1,6 +1,6 @@
 import { AuditLog } from "@/domain/entities/audit-log.entity";
 import { AuditLogRepository } from "@/domain/repositories/audit-log.repository";
-import { db } from "../database/postgres.connection";
+import { db } from "../../database/postgres.connection";
 
 export class PostgresAuditLogRepository implements AuditLogRepository {
   async create(log: Omit<AuditLog, "id" | "changedAt">): Promise<AuditLog> {
@@ -16,7 +16,7 @@ export class PostgresAuditLogRepository implements AuditLogRepository {
         log.oldValue ?? null,
         log.newValue ?? null,
         log.action,
-      ]
+      ],
     );
 
     return result.rows[0]!;

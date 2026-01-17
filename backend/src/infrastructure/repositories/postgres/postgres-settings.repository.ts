@@ -1,6 +1,6 @@
 import { Settings } from "@/domain/entities/settings.entity";
 import { SettingsRepository } from "@/domain/repositories/settings.repository";
-import { db } from "../database/postgres.connection";
+import { db } from "../../database/postgres.connection";
 
 export class PostgresSettingsRepository implements SettingsRepository {
   async find(): Promise<Settings | null> {
@@ -8,7 +8,7 @@ export class PostgresSettingsRepository implements SettingsRepository {
       `SELECT id, receive_notifications as "receiveNotifications",
               dark_mode as "darkMode", profile_signature as "profileSignature",
               created_at as "createdAt", updated_at as "updatedAt"
-       FROM settings LIMIT 1`
+       FROM settings LIMIT 1`,
     );
 
     return result.rows[0] || null;
@@ -28,7 +28,7 @@ export class PostgresSettingsRepository implements SettingsRepository {
           settings.receiveNotifications ?? false,
           settings.darkMode ?? false,
           settings.profileSignature ?? null,
-        ]
+        ],
       );
       return result.rows[0]!;
     }
@@ -63,7 +63,7 @@ export class PostgresSettingsRepository implements SettingsRepository {
        RETURNING id, receive_notifications as "receiveNotifications",
                  dark_mode as "darkMode", profile_signature as "profileSignature",
                  created_at as "createdAt", updated_at as "updatedAt"`,
-      values
+      values,
     );
 
     return result.rows[0]!;
